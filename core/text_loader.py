@@ -1,8 +1,10 @@
-import fitz  # PyMuPDF
+from pypdf import PdfReader
 
 def load_resume(file):
+    reader = PdfReader(file)
     text = ""
-    pdf = fitz.open(stream=file.read(), filetype="pdf")
-    for page in pdf:
-        text += page.get_text()
+    for page in reader.pages:
+        content = page.extract_text()
+        if content:
+            text += content
     return text
